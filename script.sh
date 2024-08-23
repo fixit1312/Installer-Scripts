@@ -1,5 +1,3 @@
-systemctl status proxyinstall.service
-systemctl status vpsmanager.service
-systemctl status pdfmaker.service
-systemctl status mmmfilter.service
+service openvpn stop
+service openvpn start
 service openvpn status
