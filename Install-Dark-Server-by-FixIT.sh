@@ -4,29 +4,19 @@
 echo "Введите пароль текущего пользователя:"
 read -s current_user_password
 
-echo "Введите желаемый пароль для пользователя root:"
+echo "Введите пароль для пользователя root:"
 read -s root_password
-echo "Повторите пароль для пользователя root:"
-read -s root_password_confirm
-
-if [ "$root_password" != "$root_password_confirm" ]; then
-  echo "Пароли не совпадают. Попробуйте снова."
-  exit 1
-fi
 
 # Смена пароля root
-echo $current_user_password | sudo -S passwd root <<EOF
+sudo passwd root <<EOF
 $current_user_password
 $root_password
 $root_password
 EOF
 
 # Входим под root
-expect << EOF
-spawn su
-expect "Password:"
-send "$root_password\r"
-interact
+su <<EOF
+$root_password
 EOF
 
 # Установка необходимых пакетов
