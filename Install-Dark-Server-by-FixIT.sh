@@ -1,23 +1,35 @@
-#!/bin/bash
+#!/usr/bin/expect -f
 
 # Запрос пароля от текущего пользователя и пароля для root
-echo "Введите пароль текущего пользователя:"
-read -s current_user_password
+send_user "Введите пароль текущего пользователя: "
+stty -echo
+gets stdin current_user_password
+stty echo
 
-echo "Введите пароль для пользователя root:"
-read -s root_password
+send_user "\nВведите пароль для пользователя root: "
+stty -echo
+gets stdin root_password
+stty echo
 
 # Смена пароля root
-sudo passwd root <<EOF
-$current_user_password
-$root_password
-$root_password
-EOF
+spawn sudo passwd root
+expect "password for" {
+    send "$current_user_password\r"
+}
+expect "New password:" {
+    send "$root_password\r"
+}
+expect "Retype new password:" {
+    send "$root_password\r"
+}
+expect eof
 
 # Входим под root
-su <<EOF
-$root_password
-EOF
+spawn su
+expect "Password:" {
+    send "$root_password\r"
+}
+interact
 
 # Установка необходимых пакетов
 apt-get update
