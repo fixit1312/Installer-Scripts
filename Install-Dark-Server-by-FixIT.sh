@@ -16,6 +16,7 @@ fi
 
 # Смена пароля root
 echo $current_user_password | sudo -S passwd root <<EOF
+$current_user_password
 $root_password
 $root_password
 EOF
@@ -31,7 +32,12 @@ EOF
 # Установка необходимых пакетов
 apt-get update
 apt-get upgrade -y
-apt-get install -y htop net-tools mtr network-manager isc-dhcp-server openvpn
+apt-get install -y htop     
+apt-get install -y net-tools
+apt-get install -y mtr
+apt-get install -y network-manager
+apt-get install -y isc-dhcp-server
+apt-get install -y openvpn
 
 # Вывод информации о сетевых интерфейсах
 echo "Информация о сетевых интерфейсах:"
