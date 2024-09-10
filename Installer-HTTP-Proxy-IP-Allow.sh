@@ -36,7 +36,7 @@ echo "Конфигурация Squid..."
 sudo cp /etc/squid/squid.conf /etc/squid/squid.conf.bak
 sudo cat <<EOL > /etc/squid/squid.conf
 http_port 3128
-acl allowed_ips src 5.45.95.166 188.126.76.37 37.1.199.18 38.180.166.142
+acl allowed_ips src 5.45.95.166 188.126.76.37 37.1.199.18 38.180.166.142 45.143.92.38
 http_access allow allowed_ips
 http_access deny all
 EOL
